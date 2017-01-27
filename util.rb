@@ -21,7 +21,11 @@ def get_db_handle(config)
     puts server
     port     = ENV['DB_PORT'] ? ENV['DB_PORT'] : db_config[:port.to_s]
     database = ENV['DB_DATABSE'] ? ENV['DB_DATABSE'] : db_config[:database.to_s]
-    return Sequel.connect(sprintf('postgres://%s:%s@%s:%s/%s', user, password, server, port, database))
+
+    finalUrl = ENV['DATABASE_URL']
+    puts finalUrl
+    #return Sequel.connect(sprintf('postgres://%s:%s@%s:%s/%s', user, password, server, port, database))
+    return Sequel.connect(finalUrl)
   elsif engine.match(/sqlite3?/)
    # require 'sqlite3'
     # TODO check that dir is writable
