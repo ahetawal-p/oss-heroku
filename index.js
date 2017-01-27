@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -10,7 +11,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname+'/html/ahetawal-p.html');
+	var html = fs.readFileSync(__dirname+'/html/ahetawal-p.html', 'utf8')
+  	response.send(html);
 });
 
 app.listen(app.get('port'), function() {
