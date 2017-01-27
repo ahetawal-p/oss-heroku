@@ -130,7 +130,7 @@ else
 end
 
 Octokit.auto_paginate = true
-client = Octokit::Client.new :access_token => access_token, :accept => 'application/vnd.github.moondragon+json' 
+client = Octokit::Client.new :access_token => access_token, :accept => 'application/vnd.github.moondragon+json'
 
 # Dashboard configuration
 config_file = ARGV[0]
@@ -194,7 +194,7 @@ if(context.github_com?)
 else
   context[:START_RATE_LIMIT]='n/a'
 end
- 
+
 # State to make output cleaner
 printed_gh_sync=false
 printed_gen_dash=false
