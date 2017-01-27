@@ -1,2 +1,7 @@
 <h1> Test </h1>
-<?php include("html/ahetawal-p.html"); ?>
+<?php
+$filename = "html/ahetawal-p.html";
+echo "<pre><code>";
+echo htmlentities(file_get_contents($filename));
+echo "</code></pre>";
+?>
