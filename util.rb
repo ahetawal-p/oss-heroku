@@ -23,7 +23,7 @@ def get_db_handle(config)
     database = ENV['DB_DATABSE'] ? ENV['DB_DATABSE'] : db_config[:database.to_s]
     return Sequel.connect(sprintf('postgres://%s:%s@%s:%s/%s', user, password, server, port, database))
   elsif engine.match(/sqlite3?/)
-    require 'sqlite3'
+   # require 'sqlite3'
     # TODO check that dir is writable
     file = db_config[:filename.to_s]
     dir  = config['data-directory']
@@ -39,7 +39,6 @@ end
 def db_exists?(config)
   puts config
   db_config = config[:database.to_s]
-  puts db_config
   engine    = db_config[:engine.to_s]
 
   if engine.eql?('postgres')

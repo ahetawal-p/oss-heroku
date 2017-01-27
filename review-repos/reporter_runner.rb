@@ -21,7 +21,7 @@ require_relative 'reporter.rb'
 # Standard reporters
 require_relative 'report_docs.rb'
 require_relative 'report_binary_files.rb'
-require_relative 'report_license.rb'
+# require_relative 'report_license.rb'
 
 def get_reporter_instances(dashboard_config)
   reports = dashboard_config['reports']
@@ -40,7 +40,7 @@ def get_reporter_instances(dashboard_config)
       end
     end
   end
-  
+
   report_instances=[]
   reports.each do |reportName|
     clazz = Object.const_get(reportName)
@@ -56,7 +56,7 @@ def review_source(context)
   scratch_dir="#{data_directory}/scratch"
 
   report_instances=get_reporter_instances(context.dashboard_config)
- 
+
   unless(File.exists?("#{data_directory}/review-xml/"))
     Dir.mkdir("#{data_directory}/review-xml/")
   end
@@ -64,10 +64,10 @@ def review_source(context)
   owners.each do |owner|
     context.feedback.print "  #{owner} "
     review_file=File.open("#{data_directory}/review-xml/#{owner}.xml", 'w')
-  
+
     report="<github-review>\n"
     report << " <organization name='#{owner}'>\n"
-  
+
     if(context.login?(owner))
       repos = context.client.repositories(owner)
     else
@@ -81,7 +81,7 @@ def review_source(context)
       unless File.exists?("#{scratch_dir}/#{repo.full_name}")
         next
       end
-  
+
       report_instances.each do |report_obj|
         report << report_obj.report(context, repo, "#{scratch_dir}/#{repo.full_name}").to_s
       end
@@ -94,5 +94,5 @@ def review_source(context)
     review_file.close
     context.feedback.print "\n"
   end
-  
+
 end
