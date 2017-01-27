@@ -31,7 +31,7 @@ DEPENDENCIES
   sequel (~> 4.6)
 
 RUBY VERSION
-   ruby 2.0.0p481
+   ruby 2.3.3p222
 
 BUNDLED WITH
    1.14.3
