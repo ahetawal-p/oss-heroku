@@ -10,7 +10,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname+'/public/ahetawal-p.html');
+  response.sendFile(__dirname+'/html/ahetawal-p.html');
 });
 
 app.listen(app.get('port'), function() {
