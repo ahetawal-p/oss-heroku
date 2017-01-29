@@ -93,7 +93,11 @@ end
 
 def getLatestForOrgRepos(context, issue_db, org, repos)
   repos.each do |repo_obj|
-
+    # TODO AH remove this
+    if repo_obj.name == 'zeroclickinfo-goodies' || repo_obj.name == 'zeroclickinfo-spice'
+      puts 'continueing...'
+      next
+    end
     begin # Repository access blocked (Octokit::ClientError)
       issue_db.transaction do
         getMilestones(context.client, issue_db, repo_obj.full_name)
