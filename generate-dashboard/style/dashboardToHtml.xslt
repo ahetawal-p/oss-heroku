@@ -132,11 +132,11 @@
         </style>
 
         <!-- This will fail - but if you drop a theme.css file in you can add your own Bootstrap Theme :) -->
-        <link type="text/css" rel="stylesheet" href="bootstrap-theme.css" />
+        <link type="text/css" rel="stylesheet" href="html/bootstrap-theme.css" />
       </head>
       <body class="inverse">
         <ul class="nav nav-tabs pull-right" role="tablist">
-          <li><a href="AllAccounts.html">All</a></li>
+          <li><a href="/ossdash/AllAccounts">All</a></li>
           <xsl:if test="metadata/navigation/login">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -146,7 +146,7 @@
               <xsl:for-each select="metadata/navigation/login">
                 <xsl:sort select="."/>
                 <xsl:variable name="login" select="."/>
-                <li><a href="{$login}.html"><xsl:value-of select="."/></a></li>
+                <li><a href="/ossdash/{$login}"><xsl:value-of select="."/></a></li>
               </xsl:for-each>
             </ul>
           </li>
@@ -162,7 +162,7 @@
               <xsl:for-each select="metadata/navigation/team">
                 <xsl:sort select="@name"/>
                 <xsl:variable name="teamlink" select="@slug"/>
-                <li><a href="team-{$teamlink}.html"><xsl:value-of select="@name"/></a></li>
+                <li><a href="/ossdash/team-{$teamlink}"><xsl:value-of select="@name"/></a></li>
               </xsl:for-each>
              </xsl:if>
              <xsl:if test="not(metadata/navigation/team)">
@@ -170,7 +170,7 @@
               <xsl:for-each select='organization/team[not(@slug=preceding::*/@slug)]'>
                 <xsl:sort select="@name"/>
                 <xsl:variable name="teamlink" select="@slug"/>
-                <li><a href="team-{$teamlink}.html"><xsl:value-of select="@name"/></a></li>
+                <li><a href="/ossdash/team-{$teamlink}"><xsl:value-of select="@name"/></a></li>
               </xsl:for-each>
              </xsl:if>
             </ul>
@@ -185,7 +185,7 @@
               <xsl:for-each select="metadata/navigation/organization">
                 <xsl:sort select="."/>
                 <xsl:variable name="org" select="."/>
-                <li><a href="{$org}.html"><xsl:value-of select="."/></a></li>
+                <li><a href="/ossdash/{$org}"><xsl:value-of select="."/></a></li>
               </xsl:for-each>
             </ul>
           </li>
@@ -210,7 +210,7 @@
                     <xsl:for-each select="metadata/repo-reports/report">
                       <xsl:sort select="@name"/>
                       <xsl:variable name="report" select="@key"/>
-                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report])"/>)</a></li> 
+                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report])"/>)</a></li>
                     </xsl:for-each>
                   </ul>
                 </li>
@@ -230,7 +230,7 @@
                     <xsl:for-each select="metadata/issue-reports/report">
                       <xsl:sort select="@name"/>
                       <xsl:variable name="report" select="@key"/>
-                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report])"/>)</a></li> 
+                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report])"/>)</a></li>
                     </xsl:for-each>
                   </ul>
                 </li>
@@ -255,7 +255,7 @@
                     <xsl:for-each select="metadata/user-reports/report">
                       <xsl:sort select="@name"/>
                       <xsl:variable name="report" select="@key"/>
-                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report and not(text()=preceding::reporting[@type=$report]/text())])"/>)</a></li> 
+                      <li><a href="#{$report}" data-toggle="tab"><xsl:value-of select="@name"/>(<xsl:value-of select="count(//reporting[@type=$report and not(text()=preceding::reporting[@type=$report]/text())])"/>)</a></li>
                     </xsl:for-each>
                   </ul>
                 </li>
@@ -298,7 +298,7 @@
                   <xsl:variable name="logo2" select="@avatar"/>
                   <xsl:variable name="orgDescription2" select="organization/description"/>
                   <tr>
-                    <td><xsl:if test="$logo2"><a rel="tooltip" title="{$orgDescription2}" href="{$githuburl}/{$orgname2}"><img width="35" height="35" src="{$logo2}&amp;s=35"/></a></xsl:if><a href="{$orgname2}.html"><xsl:value-of select="@name"/> (<xsl:value-of select="count(repo)"/>)</a></td>
+                    <td><xsl:if test="$logo2"><a rel="tooltip" title="{$orgDescription2}" href="{$githuburl}/{$orgname2}"><img width="35" height="35" src="{$logo2}&amp;s=35"/></a></xsl:if><a href="{$orgname2}"><xsl:value-of select="@name"/> (<xsl:value-of select="count(repo)"/>)</a></td>
                     <td></td>
                   </tr>
                  </xsl:for-each>
@@ -869,7 +869,7 @@
               <table id='{$report}Table' class='data-grid'>
                <xsl:if test="not(column-type)">
                 <thead>
-                <tr><th>Issue Found In</th><th>Details</th></tr> 
+                <tr><th>Issue Found In</th><th>Details</th></tr>
                 </thead>
                 <tbody>
                 <xsl:for-each select="/github-dashdata/organization/reports/reporting[@type=$report and not(@repo=preceding::reporting[@type=$report]/@repo)]">
@@ -1024,9 +1024,9 @@ prsOpened=[
   ['2016', <xsl:value-of select="sum(organization/repo/issue-data/prs-opened['2016'>=@year]/@count)"/>],
 ]
 
-$.plot($("#issueCountChart"), [ 
-{ data: issuesClosed, label: 'closed'}, 
-{ data: issuesOpened, label: 'opened'}, 
+$.plot($("#issueCountChart"), [
+{ data: issuesClosed, label: 'closed'},
+{ data: issuesOpened, label: 'opened'},
 ],
 
 {
@@ -1059,8 +1059,8 @@ prsClosed=[
   ['2016', <xsl:value-of select="sum(organization/repo/issue-data/prs-closed['2016'>=@year]/@count)"/>],
 ]
 
-$.plot($("#pullRequestCountChart"), [ 
-{ data: prsClosed, label: 'closed' }, 
+$.plot($("#pullRequestCountChart"), [
+{ data: prsClosed, label: 'closed' },
 { data: prsOpened, label: 'opened'},
 ],
 
@@ -1115,7 +1115,7 @@ $.plot($("#issueTimeToCloseChart"), [ { data: issueResolveTimes} ],
           [6, '1 month'],
           [7, '1 quarter'],
           [8, '1 year'],
-          [9, 'over 1 year'] 
+          [9, 'over 1 year']
         ]
     },
     grid: {
@@ -1152,7 +1152,7 @@ $.plot($("#prTimeToCloseChart"), [ { data: prResolveTimes } ],
           [6, '1 month'],
           [7, '1 quarter'],
           [8, '1 year'],
-          [9, 'over 1 year'] 
+          [9, 'over 1 year']
         ]
     },
     grid: {

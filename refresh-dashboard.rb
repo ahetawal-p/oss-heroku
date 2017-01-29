@@ -24,6 +24,7 @@ require_relative 'github-pull/pull_source'
 require_relative 'review-repos/reporter_runner'
 require_relative 'generate-dashboard/generate-dashboard-xml'
 require 'optparse'
+require_relative 'generate-webcontent/store-content'
 
 class DashboardContext < Hash
 
@@ -263,17 +264,18 @@ run_list.each do |phase|
       end
 
       context.feedback.print " xslt\n  "
+
       Dir.glob("#{data_directory}/dash-xml/*.xml").each do |inputFile|
         outputFile=File.basename(inputFile, ".xml")
 
         stylesheet = LibXSLT::XSLT::Stylesheet.new( LibXML::XML::Document.file(File.join( File.dirname(__FILE__), 'generate-dashboard', 'style', 'dashboardToHtml.xslt') ) )
         xml_doc = LibXML::XML::Document.file(inputFile)
         html = stylesheet.apply(xml_doc)
-
+        store_html(context, outputFile, html.to_s)
         htmlFile = File.new("#{www_directory}/#{outputFile}.html", 'w')
         htmlFile.write(html)
         htmlFile.close
-        context.feedback.print "."
+        context.feedback.print ".\n"
       end
       context.feedback.print "\n"
 

@@ -15,15 +15,11 @@ def get_db_handle(config)
     require 'pg'
     # TODO ensure that all keys are provided
     user     = ENV['DB_USERNAME'] ? ENV['DB_ USERNAME'] : db_config[:username.to_s]
-    puts user
     password = ENV['DB_PASSWORD'] ? ENV['DB_PASSWORD'] : db_config[:password.to_s]
     server   = ENV['DB_SERVER'] ? ENV['DB_SERVER'] : db_config[:server.to_s]
-    puts server
     port     = ENV['DB_PORT'] ? ENV['DB_PORT'] : db_config[:port.to_s]
     database = ENV['DB_DATABSE'] ? ENV['DB_DATABSE'] : db_config[:database.to_s]
-
-    finalUrl = ENV['DATABASE_URL']
-    puts finalUrl
+    finalUrl = ENV['DATABASE_URL'] ? ENV['DATABASE_URL'] : sprintf('postgres://%s:%s@%s:%s/%s', user, password, server, port, database)
     #return Sequel.connect(sprintf('postgres://%s:%s@%s:%s/%s', user, password, server, port, database))
     return Sequel.connect(finalUrl)
   elsif engine.match(/sqlite3?/)

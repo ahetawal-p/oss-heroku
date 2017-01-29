@@ -8,6 +8,8 @@ GEM
     libxml-ruby (2.9.0)
     libxslt-ruby (1.1.1)
       libxml-ruby (>= 2.4.0)
+    licensee (8.7.0)
+      rugged (~> 0.24)
     multipart-post (2.0.0)
     octokit (4.6.2)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -24,6 +26,7 @@ PLATFORMS
 DEPENDENCIES
   libxml-ruby (> 0)
   libxslt-ruby (> 0)
+  licensee (~> 8.7)
   octokit (~> 4.6)
   pg
   sequel (~> 4.6)
