@@ -148,6 +148,11 @@ end
 
 def getLatestIssueComments(context, issue_db, org, repos)
   repos.each do |repo_obj|
+    # TODO AH remove this
+    if repo_obj.name == 'zeroclickinfo-goodies' || repo_obj.name == 'zeroclickinfo-spice'
+      puts 'continueing...'
+      next
+    end
     begin
       issue_db.transaction do
         # Get the current max timestamp in the db
