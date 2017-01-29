@@ -44,7 +44,14 @@ def sync_commits(context, sync_db)
         next
       end
       repo_name=repo_obj.name
+      puts repo_name
+
       repo_full_name=repo_obj.full_name
+      if repo_name == 'zeroclickinfo-goodies' || repo_name == 'zeroclickinfo-spice'
+        puts 'continueing...'
+        next
+      end
+
       maxTimestamp=db_commit_max_timestamp_by_repo(sync_db, org, repo_name)               # Get the current max timestamp in the db
       unless(maxTimestamp)
         if(repo_obj.fork)
