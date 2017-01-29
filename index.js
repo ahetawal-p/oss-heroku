@@ -16,37 +16,21 @@ app.use('/html',express.static(path.join(__dirname, 'html')));
 
 app.get('/', function(request, response) {
 	var endpoint = 'AllAccounts';
-	dbCalls("select html FROM result_store WHERE endpoint=($1)", [endpoint], true)
-	.done(function(result){
-		var htmlResult = result['html'];
-		if(htmlResult){
-			response.send(htmlResult);
-		}else{
-			response.send("No content found");
-		}
-	},
-    function(error){
-    	console.log(error);
-    	next(error);
+	dbCalls("select count(*) FROM result_store WHERE endpoint=($1)", [endpoint], true)
+	.then(function(result){
+		if(result && result.count == 0) {
+				console.log("Serving first record");
+				serveFirstRecord(response);
+			} else {
+				serveValidEndpointRecord(response, endpoint);
+			}
 	});
 });
 
 
 app.get('/ossdash/:type', function(request, response) {
 	var endpoint = request.params.type;
- 	dbCalls("select html FROM result_store WHERE endpoint=($1)", [endpoint], true, true)
-	.done(function(result){
-		var htmlResult = result['html'];
-		if(htmlResult){
-			response.send(htmlResult);
-		}else{
-			response.send("No content found");
-		}
-	},
-    function(error){
-    	console.log(error);
-    	next(error);
-	});
+ 	serveValidEndpointRecord(response, endpoint)
 });
 
 
@@ -61,6 +45,48 @@ app.use(function(err, req, res, next) {
          error: {}
     });
 });
+
+
+serveFirstRecord = function(response) {
+	dbCalls("select html FROM result_store limit 1", [], true, true)
+	.done(function(result){
+		if(result){
+			var htmlResult = result['html'];
+			if(htmlResult){
+				response.send(htmlResult);
+			}
+		} else {
+			response.send("No content found");
+		}
+	},
+    function(error){
+    	console.log(error);
+    	next(error);
+	});
+}
+
+
+serveValidEndpointRecord = function(response, endpoint) {
+	dbCalls("select html FROM result_store WHERE endpoint=($1)", [endpoint], true, true)
+	.done(function(result){
+		if(result){
+			var htmlResult = result['html'];
+			if(htmlResult){
+				response.send(htmlResult);
+			}
+		} else {
+			response.send("No content found");
+		}
+	},
+    function(error){
+    	console.log(error);
+    	next(error);
+	});
+
+
+}
+
+
 
 dbCalls = function (sql, values, singleItem, dontLog) {
 	if (!dontLog) {
