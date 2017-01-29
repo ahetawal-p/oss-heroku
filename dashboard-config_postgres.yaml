@@ -10,7 +10,7 @@
     data-directory: data # used for both DB and computed data
     www-directory: html
 
-    organizations: ['duckduckgo']
+    organizations: []
     logins: ['ahetawal-p']
     reports: [ 'DocsReporter', 'BinaryReporter', 'LicenseReporter']
     db-reports: [ 'UnknownCollaboratorsDbReporter', 'UnknownMembersDbReporter', 'No2faDbReporter', 'WikiOnDbReporter', 'EmptyDbReporter', 'UnchangedDbReporter', 'NoIssueCommentsDbReporter', 'NoPrCommentsDbReporter', 'LabelDbReporter', 'AverageIssueCloseDbReporter', 'AveragePrCloseDbReporter', 'AverageIssueOpenedDbReporter', 'AveragePrOpenedDbReporter' ]

@@ -137,6 +137,9 @@ client = Octokit::Client.new :access_token => access_token, :accept => 'applicat
 config_file = ARGV[0]
 config = YAML.load(File.read(config_file))
 dashboard_config = config['dashboard']
+# Overriding from env variables
+dashboard_config['logins'] = ENV['LOGINS'] ? ENV['LOGINS'].split(",") : dashboard_config['logins']
+dashboard_config['organizations'] = ENV['ORGANIZATIONS'] ? ENV['ORGANIZATIONS'].split(",") : dashboard_config['organizations']
 data_directory = dashboard_config['data-directory']
 www_directory = dashboard_config['www-directory']
 
