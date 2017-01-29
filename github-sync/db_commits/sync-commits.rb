@@ -44,9 +44,8 @@ def sync_commits(context, sync_db)
         next
       end
       repo_name=repo_obj.name
-      puts repo_name
-
       repo_full_name=repo_obj.full_name
+      # TODO AH remove this
       if repo_name == 'zeroclickinfo-goodies' || repo_name == 'zeroclickinfo-spice'
         puts 'continueing...'
         next

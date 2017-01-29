@@ -3,7 +3,7 @@ require 'yaml'
 
 
 desc 'collect data from github.com and output to database'
-task :doit do # not sure this is the right name
+task :generateDashboard do
 	sh 'rm -rf /app/vendor/bundle/ruby/2.2.0/extensions/x86_64-linux/2.2.0-static/libxslt-ruby-1.1.1'
 	sh 'gem pristine libxslt-ruby --version 1.1.1'
   	sh sprintf('ruby refresh-dashboard.rb %s', 'dashboard-config_postgres.yaml')
