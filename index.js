@@ -16,7 +16,7 @@ app.use('/html',express.static(path.join(__dirname, 'html')));
 
 app.get('/', function(request, response) {
 	var endpoint = 'AllAccounts';
-	dbCalls("select count(*) FROM result_store WHERE endpoint=($1)", [endpoint], true)
+	dbCalls("select count(*) FROM result_store WHERE endpoint=($1)", [endpoint], true, true)
 	.then(function(result){
 		if(result && result.count == 0) {
 				console.log("Serving first record");

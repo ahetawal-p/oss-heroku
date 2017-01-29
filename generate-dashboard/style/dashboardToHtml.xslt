@@ -298,7 +298,7 @@
                   <xsl:variable name="logo2" select="@avatar"/>
                   <xsl:variable name="orgDescription2" select="organization/description"/>
                   <tr>
-                    <td><xsl:if test="$logo2"><a rel="tooltip" title="{$orgDescription2}" href="{$githuburl}/{$orgname2}"><img width="35" height="35" src="{$logo2}&amp;s=35"/></a></xsl:if><a href="{$orgname2}"><xsl:value-of select="@name"/> (<xsl:value-of select="count(repo)"/>)</a></td>
+                    <td><xsl:if test="$logo2"><a rel="tooltip" title="{$orgDescription2}" href="{$githuburl}/{$orgname2}"><img width="35" height="35" src="{$logo2}&amp;s=35"/></a></xsl:if><a href="/ossdash/{$orgname2}"><xsl:value-of select="@name"/> (<xsl:value-of select="count(repo)"/>)</a></td>
                     <td></td>
                   </tr>
                  </xsl:for-each>
